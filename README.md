@@ -7,16 +7,16 @@ A demo scene was added so you can easily test everything on your devices.
 
 Note : Not tested on many different devices. Your feedbacks would be greatly appreciated. 
 
-###How does it work, internally
+##How does it work, internally
 When the Cardboard magnet is pulled or released, the magnitude *and* the angle of the device's compass vector are both affected. This script uses that fact to effectively detect a pull or a release of the magnet.
 
-###Dependencies
+##Dependencies
 [Cardboard SDK for Unity](https://developers.google.com/cardboard/unity/).
 
-###Installation
+##Installation
 Attach the MagnetPull.cs script to any object on the scene and you are ready to use it !
 
-###How to use
+##How to use
 **Check if magnet is currently pulled:**
 ```
 if (MagnetPull.SDK.isMagnetPulled) {
@@ -45,5 +45,5 @@ if (MagnetPull.SDK.magnetReleased) {
 ```
 
 
-###Credits
+##Credits
 Thanks to <a href="https://www.assetstore.unity3d.com/en/#!/content/53752" target="_blank">Stagit East</a> for the free and amazing skybox used in the demo. 
