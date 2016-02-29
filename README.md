@@ -44,4 +44,4 @@ if (MagnetPull.SDK.magnetReleased) {
 When the Cardboard magnet is pulled or released, the magnitude *and* the angle of the device compass' vector are both affected. This script uses that fact to effectively detect a pull or a release of the magnet.
 
 ###Credits
-Thanks to [Stagit East] (https://www.assetstore.unity3d.com/en/#!/content/53752) for the free and amazing skybox used in the demo. 
+Thanks to <a href="https://www.assetstore.unity3d.com/en/#!/content/53752" target="_blank">Stagit East</a> for the free and amazing skybox used in the demo. 
