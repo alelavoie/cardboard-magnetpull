@@ -26,7 +26,7 @@ if (MagnetPull.SDK.isMagnetPulled) {
 
 *Get the time the magnet was pulled:*
 ```
-float pullTime = MagnetPull.SDK.isMagnetPulled;
+float pullTime = MagnetPull.SDK.timePulled;
 ```
 
 *Listen to a pull event:*
