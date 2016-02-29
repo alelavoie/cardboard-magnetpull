@@ -28,6 +28,7 @@ if (MagnetPull.SDK.isMagnetPulled) {
 ```
 float pullTime = MagnetPull.SDK.timePulled;
 ```
+Note that timePulled will keep the value of the last pull untill a new pull is made
 
 *Listen to a pull event:*
 ```
