@@ -17,27 +17,27 @@ When the Cardboard magnet is pulled or released, the magnitude *and* the angle o
 Attach the MagnetPull.cs script to any object on the scene and you are ready to use it !
 
 ###How to use
-*Check if magnet is currently pulled:*
+**Check if magnet is currently pulled:**
 ```
 if (MagnetPull.SDK.isMagnetPulled) {
   //Do stuff
 }
 ```
 
-*Get the time the magnet was pulled:*
+**Get the time the magnet was pulled:**
 ```
 float pullTime = MagnetPull.SDK.timePulled;
 ```
 Note that timePulled will keep the value of the last pull untill a new pull is made
 
-*Listen to a pull event:*
+**Listen to a pull event:**
 ```
 if (MagnetPull.SDK.magnetPulled) {
   //Do stuff
 }
 ```
 
-*Listen to a release event:*
+**Listen to a release event:**
 ```
 if (MagnetPull.SDK.magnetReleased) {
   //Do stuff
