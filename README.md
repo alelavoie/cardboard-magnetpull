@@ -1,5 +1,5 @@
 # MagnetPull - Cardboard Magnet Extended Controls
-This simple script extends the magnet controls for the [Cardboard SDK for Unity](https://developers.google.com/cardboard/unity/). 
+This simple script extends the magnet controls for the [Cardboard SDK for Unity](https://developers.google.com/cardboard/unity/) by Google. 
 
 With MagnetPull, you will now be able to detect when the magnet is pulled or released as well as how long it was pulled.
 
