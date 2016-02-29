@@ -22,23 +22,6 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*
-NOTES FROM THE AUTHOR
----------------------
-
-Why did I made this script ? 
-
-Because Google's Cardboad default SDK only detects a quick pull/release of the magnet and the other 
-extended controls scripts we could find didn't work properly. They tend to stop working when the 
-compass' raw vector is "normalized" internally (sudden change in magnitude).
-
-What makes this script more efficient ?
-
-Instead of detecting magnitude variations only, it also detects angle variations. When the magnet is 
-pulled or released, the magnitude and the angle of the compass' raw vector are both affected and this 
-script uses that fact to acquire more precision. 
-*/
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
