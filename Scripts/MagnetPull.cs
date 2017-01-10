@@ -1,4 +1,4 @@
-﻿/*
+/*
 LICENSE
 -------
 
@@ -28,20 +28,15 @@ using System.Collections.Generic;
 
 public class MagnetPull : MonoBehaviour {
   
-  int dataSetLength = 4; 
-  
-  float dataGatheringFrequency = 0.06f;
-  
-  float angleDetectionTreshold = 9.0f;
-  
+  int dataSetLength = 4;   
+  float dataGatheringFrequency = 0.06f;  
+  float angleDetectionTreshold = 9.0f;  
   float magnitudeDetectionTreshold = 70.0f;
   
-  List<Vector3> readings = new List<Vector3>();
-  
+  List<Vector3> readings = new List<Vector3>();  
   Vector3 actualVector;
  
-  float diffMagnitude;
-  
+  float diffMagnitude;  
   float diffAngle;    
  
   [HideInInspector]
@@ -51,8 +46,7 @@ public class MagnetPull : MonoBehaviour {
   [HideInInspector]
   public bool magnetReleased;
   [HideInInspector]
-  public bool magnetTriggered;
-  
+  public bool magnetTriggered;  
   [HideInInspector]
   public float timePulled = 0;
   
@@ -70,17 +64,21 @@ public class MagnetPull : MonoBehaviour {
       }
       return sdk;
     }    
-  }
+  }	
+	
   void Start () {
+	  
     isMagnetPulled = false;
     Input.compass.enabled = true;
     actualVector = Input.compass.rawVector;
     StartCoroutine("compassVariation");
     magnetPulled = false;
+	  
   }
 	
-  void Update () {
-    
+	
+  void Update () {	
+	  
     //If the default triggered event is fired, reset everything to ensure synchronism. 
     if (Cardboard.SDK.Triggered) {
       if (isMagnetPulled && !magnetJustReleased) {
@@ -88,31 +86,33 @@ public class MagnetPull : MonoBehaviour {
         isMagnetPulled = false;
         readings.Clear();
       }
-    }
-    
+    }   
+	  
     if (isMagnetPulled) {
       timePulled += Time.deltaTime;
-    }
-    
+    }   
+	  
     //Simulate magnet in editor
     if (Input.GetKeyDown(simulateMagnetKey)) {
       magnetJustPulled = true;
       isMagnetPulled = true;
       timePulled = 0;
-    }
+    }	  
     if (Input.GetKeyUp(simulateMagnetKey)) {
       if (isMagnetPulled) {
         magnetJustReleased = true;
         isMagnetPulled = false;
       }
     }
+	  
   }
   
-  IEnumerator compassVariation() {
-    
+	
+  IEnumerator compassVariation() {    
+	  
     int count = readings.Count;
-    actualVector = Input.compass.rawVector;
-    
+    actualVector = Input.compass.rawVector;   
+	  
     if(count >= (dataSetLength)) {
 	    
       readings.RemoveAt(0);      
@@ -145,13 +145,17 @@ public class MagnetPull : MonoBehaviour {
       yield return new WaitForSeconds(dataGatheringFrequency);
       StartCoroutine("compassVariation");
     
-    } else { //Still building dataset.
+    } else { //Still building dataset.	    
       readings.Add(actualVector);
       yield return new WaitForSeconds(dataGatheringFrequency);
-      StartCoroutine("compassVariation");
+      StartCoroutine("compassVariation");	    
     }
+	  
   }
+	
+	
   void LateUpdate() {
+	  
     if (magnetPulled) {
       magnetPulled = false;
     }
@@ -166,5 +170,7 @@ public class MagnetPull : MonoBehaviour {
       magnetReleased = true;
       magnetJustReleased = false;
     }    
+	  
   }
+	
 }
