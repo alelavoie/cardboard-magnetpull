@@ -28,23 +28,12 @@ using System.Collections.Generic;
 
 public class MagnetPull : MonoBehaviour {
   
-  //Number of records to hold on the magnet angle and magnitude. The script compares the oldest record 
-  //with the newest record in order to detect a magnet pull or release event. Note that the records are 
-  //cleared after each event. If set too high, the data set will take more time to build and might miss 
-  //some events. If set too low, it will detect only very small changes and might never trigger the
-  //events. This, of course, is all relative to the value of dataGatheringFrequency.
   int dataSetLength = 4; 
   
-  //Frequency of recording measurments. 
   float dataGatheringFrequency = 0.06f;
   
-  //NOTE : The following treshold values are optimal for the device and the geo-localisation this was 
-  //       tested (LG Nexus 5, Montréal)
-    
-  //Minimum angle variation to trigger an event
   float angleDetectionTreshold = 9.0f;
   
-  //Minimum magnitude variation to trigger an event
   float magnitudeDetectionTreshold = 70.0f;
   
   List<Vector3> readings = new List<Vector3>();
@@ -53,13 +42,10 @@ public class MagnetPull : MonoBehaviour {
  
   float diffMagnitude;
   
-  float diffAngle;
-    
-  //Stays true while magnet is pulled. 
+  float diffAngle;    
+ 
   [HideInInspector]
-  public bool isMagnetPulled;
-  
-  //Stays true for one frame (event-like).
+  public bool isMagnetPulled;  
   [HideInInspector]
   public bool magnetPulled;
   [HideInInspector]
@@ -68,7 +54,6 @@ public class MagnetPull : MonoBehaviour {
   public bool magnetTriggered;
   
   [HideInInspector]
-  //Time of the pull. It keeps the value after the release event. Will be reset upon a new pull.
   public float timePulled = 0;
   
   bool magnetJustPulled;
@@ -88,20 +73,17 @@ public class MagnetPull : MonoBehaviour {
   }
   void Start () {
     isMagnetPulled = false;
-	 Input.compass.enabled = true;
-   actualVector = Input.compass.rawVector;
-   StartCoroutine("compassVariation");
-   magnetPulled = false;
-	}
+    Input.compass.enabled = true;
+    actualVector = Input.compass.rawVector;
+    StartCoroutine("compassVariation");
+    magnetPulled = false;
+  }
 	
-	void Update () {
+  void Update () {
     
-    //Here, we use the default Google Cardboard triggered event to make sure everything is synchronized. 
-    //For example : if the has no intro and starts right away, a false pull is sometimes detected when 
-    //putting the device inside the cardboard. A quick pull/release will synchronize everything. 
+    //If the default triggered event is fired, reset everything to ensure synchronism. 
     if (Cardboard.SDK.Triggered) {
       if (isMagnetPulled && !magnetJustReleased) {
-        //A pull was detected before the trigger, let's release. 
         magnetJustReleased = true;
         isMagnetPulled = false;
         readings.Clear();
@@ -112,7 +94,7 @@ public class MagnetPull : MonoBehaviour {
       timePulled += Time.deltaTime;
     }
     
-    //Used in editor only to simulate magnet
+    //Simulate magnet in editor
     if (Input.GetKeyDown(simulateMagnetKey)) {
       magnetJustPulled = true;
       isMagnetPulled = true;
@@ -124,19 +106,19 @@ public class MagnetPull : MonoBehaviour {
         isMagnetPulled = false;
       }
     }
-	}
+  }
   
   IEnumerator compassVariation() {
     
     int count = readings.Count;
     actualVector = Input.compass.rawVector;
-    //If data set is full
+    
     if(count >= (dataSetLength)) {
+	    
       readings.RemoveAt(0);      
-       readings.Add(actualVector);
-      //Calculate magnitude difference between first and last vector in data set
-      diffMagnitude = readings[(dataSetLength - 1)].magnitude - readings[0].magnitude;
-      //Calculate angle between first and last vector in data set
+      readings.Add(actualVector);
+      
+      diffMagnitude = readings[(dataSetLength - 1)].magnitude - readings[0].magnitude;     
       diffAngle = Vector3.Angle(readings[(dataSetLength - 1)], readings[0]);
       
       //When the magnet moves, both the angle and the magnitude of the compass rawVector
@@ -145,7 +127,6 @@ public class MagnetPull : MonoBehaviour {
       //also a notable magnitude variation.
       if (diffAngle >= angleDetectionTreshold) {
         if (isMagnetPulled) {
-          //If magnet is released, magnitude variation should be negative.
           if (diffMagnitude < -magnitudeDetectionTreshold) {
             magnetJustReleased = true;
             isMagnetPulled = false;
@@ -171,8 +152,6 @@ public class MagnetPull : MonoBehaviour {
     }
   }
   void LateUpdate() {
-    //Here, we use late update to make sure magnetPulled, magnetReleased and magnetTriggered stays true 
-    //for one frame only but all frame long. 
     if (magnetPulled) {
       magnetPulled = false;
     }
